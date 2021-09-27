@@ -5,28 +5,28 @@ import java.util.TreeMap;
 
 public class School {
 	private final static Scanner sc = new Scanner(System.in);
-	private TreeMap<String, Teacher> teachers = new TreeMap<>();
-	private TreeMap<String, Student> students = new TreeMap<>();
+	private final TreeMap<String, Teacher> teachers = new TreeMap<>();
+	private final TreeMap<String, Student> students = new TreeMap<>();
 
-	private TreeMap<String, Subject> courses = new TreeMap<>();
+	private final TreeMap<String, Subject> courses = new TreeMap<>();
 
 	public void addCourse() {
 		System.out.println("Enter Course Details : ");
 		// Scanner sc = new Scanner(System.in);
-		String name = sc.next();
-		String code = sc.next();
-		Integer price = sc.nextInt();
-		String teacher = sc.next() + " " + sc.next();
-		Subject s = new Subject(name, code, price, teacher);
+		final String name = sc.next();
+		final String code = sc.next();
+		final Integer price = sc.nextInt();
+		final String teacher = sc.next() + " " + sc.next();
+		final Subject s = new Subject(name, code, price, teacher);
 
 		if (!teachers.containsKey(teacher)) {
 			System.out.println("Teacher is Not Registered");
 			// sc.close()
 			return;
 		}
-
-		while (sc.hasNext()) {
-			String st = sc.next() + " " + sc.next();
+		Integer num = sc.nextInt();
+		while (num-- > 0) {
+			final String st = sc.next() + " " + sc.next();
 			if (this.students.containsKey(st)) {
 				s.addStudent(students.get(st));
 				students.get(st).addCourse(s);
@@ -41,16 +41,16 @@ public class School {
 		this.courses.put(name, s);
 		succ();
 	}
-	
+
 	public void addStudent() {
 		System.out.println("Enter Student Details :");
 		// Scanner sc = new Scanner(System.in);
-		String name = sc.next() + " " + sc.next();
-		Integer grade = sc.nextInt();
-		Student s = new Student();
+		final String name = sc.next() + " " + sc.next();
+		final Integer grade = sc.nextInt();
+		final Student s = new Student();
 		s.setGrade(grade);
 		s.setName(name);
-		
+
 		students.put(name, s);
 		succ();
 		// sc.close()
@@ -59,8 +59,8 @@ public class School {
 	public void addTeacher() {
 		System.out.println("Enter Teacher Details");
 		// Scanner sc = new Scanner(System.in);
-		String name = sc.next() + " " + sc.next();
-		Teacher t = new Teacher();
+		final String name = sc.next() + " " + sc.next();
+		final Teacher t = new Teacher();
 		t.setName(name);
 
 		teachers.put(name, t);
@@ -70,17 +70,20 @@ public class School {
 
 	public void feesOfStudent() {
 		System.out.println("Enter Student Name");
-		// Scanner sc = new Scanner(System.in);
-		String st = sc.next() + " " + sc.next();
-		// sc.close()
-		System.out.println(this.students.get(st).fees());
+
+		final String st = sc.next() + " " + sc.next();
+
+		final Integer ret = this.courses.values().stream().filter(s -> s.hasStudent(st)).map(Subject::getPrice)
+				.reduce(0, Integer::sum);
+
+		System.out.println(ret);
 
 	}
 
 	public void listCoursesForStudent() {
 		System.out.println("Enter Course Name : ");
 		// Scanner sc = new Scanner(System.in);
-		String name = sc.next();
+		final String name = sc.next();
 		// sc.close()
 		students.get(name).getCoursesName().forEach(System.out::println);
 	}
@@ -93,18 +96,18 @@ public class School {
 	}
 
 	public void listStudentByGrade() {
-		Integer g = sc.nextInt();
+		final Integer g = sc.nextInt();
 		System.out.println("Students with grade " + g + "\n-------------------");
-		students.values().stream().filter((s) -> s.getGrade() == g).forEach(System.out :: println);
+		students.values().stream().filter(s -> s.getGrade() == g).forEach(System.out::println);
 
 	}
 
 	public void listStudentBySubject() {
 		System.out.println("Enter Course Name : ");
 		// Scanner sc = new Scanner(System.in);
-		String course = sc.next();
+		final String course = sc.next();
 		// sc.close()
-		for (Student s : students.values()) {
+		for (final Student s : students.values()) {
 			if (s.getCoursesName().contains(course)) {
 				System.out.println(s.getName());
 			}
@@ -115,7 +118,7 @@ public class School {
 	public void listSubjectOfStudent() {
 		System.out.println("Enter Student Name : ");
 		// Scanner sc = new Scanner(System.in);
-		String std = sc.next() + " " + sc.next();
+		final String std = sc.next() + " " + sc.next();
 		// sc.close()
 		this.students.get(std).getCoursesName().forEach(System.out::println);
 	}
@@ -123,9 +126,9 @@ public class School {
 	public void listSubjectsOfTeacher() {
 		System.out.println("Enter Name of Teacher : ");
 		// Scanner sc = new Scanner(System.in);
-		String name = sc.next() + " " + sc.next();
+		final String name = sc.next() + " " + sc.next();
 		// sc.close()
-		for (Subject s : teachers.get(name).getCourses()) {
+		for (final Subject s : teachers.get(name).getCourses()) {
 			System.out.println(s.getName());
 		}
 	}
@@ -136,7 +139,8 @@ public class School {
 	}
 
 	private final void succ() {
-		System.out.println("\nOperation Done Successfully! Please Select a new Choice");
+		System.out.println("\n----------------------------------");
+		System.out.print("Operation Done Successfully! Please Select a new Choice : ");
 	}
 
 }

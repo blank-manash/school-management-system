@@ -5,44 +5,35 @@ import java.util.TreeSet;
 public class Student implements Comparable<Student> {
 	private String name;
 	private Integer grade;
-	private TreeSet<Subject> courses = new TreeSet<>();
-	private TreeSet<String> coursesName = new TreeSet<>();
+	private final TreeSet<String> coursesName = new TreeSet<>();
+
+	public void addCourse(final Subject s) {
+		this.coursesName.add(s.getName());
+	}
+
+	@Override
+	public int compareTo(final Student o) {
+		return name.compareTo(o.name);
+	}
+
 	public TreeSet<String> getCoursesName() {
 		return coursesName;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Integer getGrade() {
 		return grade;
 	}
 
-	public void setGrade(Integer grade) {
+	public String getName() {
+		return name;
+	}
+
+	public void setGrade(final Integer grade) {
 		this.grade = grade;
 	}
 
-	public void addCourse(Subject s) {
-		this.courses.add(s);
-		this.coursesName.add(s.getName());
-	}
-
-	public long fees() {
-		long ret = 0;
-		for (Subject s : courses) {
-			ret += s.getPrice();
-		}
-		return ret;
-	}
-
-	@Override
-	public int compareTo(Student o) {
-		return name.compareTo(o.name);
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 }
