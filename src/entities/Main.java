@@ -20,6 +20,7 @@ public class Main {
 		System.out.println("8 : List all the subjects taught by a teacher.");
 		System.out.println("9 : List all the subjects enrolled for a student.");
 		System.out.println("10 : Present the fees payable by a particular student.");
+		System.out.println("11 : Repeat This Prompt");
 
 		System.out.print("Enter a choice : ");
 	}
@@ -63,10 +64,13 @@ public class Main {
 				case 10:
 					school.feesOfStudent();
 					break;
+				case 11:
+					prompt();
 				default:
 					break;
 				}
 			}
+			
 		}
 	}
 

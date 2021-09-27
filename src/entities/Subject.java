@@ -3,11 +3,11 @@ package entities;
 import java.util.TreeSet;
 
 public class Subject implements Comparable<Subject> {
-	private String name;
-	private String code;
+	private String name = "";
+	private String code = "";
 	private Integer price;
-	private String teacher;
-	private TreeSet<Student> students;
+	private String teacher = "";
+	private TreeSet<Student> students = new TreeSet<>();
 
 	public void addStudent(Student s) {
 		this.students.add(s);

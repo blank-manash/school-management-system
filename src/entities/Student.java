@@ -5,8 +5,8 @@ import java.util.TreeSet;
 public class Student implements Comparable<Student> {
 	private String name;
 	private Integer grade;
-	private TreeSet<Subject> courses;
-	private TreeSet<String> coursesName;
+	private TreeSet<Subject> courses = new TreeSet<>();
+	private TreeSet<String> coursesName = new TreeSet<>();
 	public TreeSet<String> getCoursesName() {
 		return coursesName;
 	}

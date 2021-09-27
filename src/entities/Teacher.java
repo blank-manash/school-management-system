@@ -4,7 +4,7 @@ import java.util.TreeSet;
 
 public class Teacher implements Comparable<Teacher> {
 	private String name;
-	private TreeSet<Subject> courses;
+	private TreeSet<Subject> courses = new TreeSet<>();
 	public Subject[] getCourses() {
 		return (Subject[]) courses.toArray();
 	}
