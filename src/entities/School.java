@@ -4,10 +4,12 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class School {
-	private TreeMap<String, Teacher> teachers;
-	private TreeMap<String, Student> students;
-	private TreeMap<String, Subject> courses;
-	private TreeMap<Integer, Student> studentByGrade;
+	private TreeMap<String, Teacher> teachers = new TreeMap<>();
+	private TreeMap<String, Student> students = new TreeMap<>();
+	private TreeMap<String, Subject> courses = new TreeMap<>();
+	private TreeMap<Integer, Student> studentByGrade = new TreeMap<>();
+
+	private final static Scanner sc = new Scanner(System.in);
 
 	public void listPopulation() {
 		System.out.println("Teachers");
@@ -21,82 +23,115 @@ public class School {
 		teachers.keySet().forEach(System.out::println);
 	}
 
-	public void listStudentByGrade(int G) {
+	public void listStudentByGrade() {
+
 		for (Student s : studentByGrade.values()) {
 			System.out.println(s.getGrade() + " : " + s.getName());
 		}
+
 	}
 
-	public void listStudentBySubject(String course) {
+	public void listStudentBySubject() {
+		System.out.println("Enter Course Name : ");
+		// Scanner sc = new Scanner(System.in);
+		String course = sc.next();
+		// sc.close()
 		for (Student s : students.values()) {
 			if (s.getCoursesName().contains(course)) {
 				System.out.println(s.getName());
 			}
 		}
+
 	}
 
-	public void listSubjectsOfTeacher(String name) {
+	public void listSubjectOfStudent() {
+		System.out.println("Enter Student Name : ");
+		// Scanner sc = new Scanner(System.in);
+		String std = sc.next() + " " + sc.next();
+		// sc.close()
+		this.students.get(std).getCoursesName().forEach(System.out::println);
+	}
+
+	public void listSubjectsOfTeacher() {
+		System.out.println("Enter Name of Teacher : ");
+		// Scanner sc = new Scanner(System.in);
+		String name = sc.next() + " " + sc.next();
+		// sc.close()
 		for (Subject s : teachers.get(name).getCourses()) {
 			System.out.println(s.getName());
 		}
 	}
 
-	public void listCoursesForStudent(String name) {
+	public void listCoursesForStudent() {
+		System.out.println("Enter Course Name : ");
+		// Scanner sc = new Scanner(System.in);
+		String name = sc.next();
+		// sc.close()
 		students.get(name).getCoursesName().forEach(System.out::println);
 	}
 
 	public void addStudent() {
 		System.out.println("Enter Student Details :");
-		Scanner sc = new Scanner(System.in);
+		// Scanner sc = new Scanner(System.in);
 		String name = sc.next() + " " + sc.next();
 		Integer grade = sc.nextInt();
 		Student s = new Student();
 		s.setGrade(grade);
 		s.setName(name);
-		while (sc.hasNext()) {
-			String c = sc.next();
-			if (courses.containsKey(c)) {
-				s.addCourse(courses.get(c));
-			} else {
-				System.out.println("Course " + c + " is not registered");
-				sc.close();
-				return;
-			}
-		}
+
 		students.put(name, s);
-		sc.close();
+		// sc.close()
 	}
 
 	public void addTeacher() {
 		System.out.println("Enter Teacher Details");
-		Scanner sc = new Scanner(System.in);
+		// Scanner sc = new Scanner(System.in);
 		String name = sc.next() + " " + sc.next();
 		Teacher t = new Teacher();
 		t.setName(name);
+
+		teachers.put(name, t);
+		// sc.close()
+	}
+
+	public void addCourse() {
+		System.out.println("Enter Course Details : ");
+		// Scanner sc = new Scanner(System.in);
+		String name = sc.next();
+		String code = sc.next();
+		Integer price = sc.nextInt();
+		String teacher = sc.next();
+		Subject s = new Subject(name, code, price, teacher);
+
+		if (!teachers.containsKey(teacher)) {
+			System.out.println("Teacher is Not Registered");
+			// sc.close()
+			return;
+		}
+
 		while (sc.hasNext()) {
-			String c = sc.next();
-			if (courses.containsKey(c)) {
-				t.addCourse(courses.get(c));
+			String st = sc.next() + " " + sc.next();
+			if (this.students.containsKey(st)) {
+				s.addStudent(students.get(st));
+				students.get(st).addCourse(s);
+
 			} else {
-				System.out.println("Course " + c + " is not registered");
-				sc.close();
+				System.out.println("Student " + st + " is not registered");
+				// sc.close()
 				return;
 			}
 		}
-		teachers.put(name, t);
-		sc.close();
-	}
-
-	public void addCourse(String name, String code, Integer price, String teacher) {
-		Subject s = new Subject(name, code, price, teacher);
-		if(teachers.containsKey(teacher)) {
-			teachers.get(teacher).addCourse(s);
-		} else {
-			Teacher t = new Teacher();
-			t.setName(name);
-			t.addCourse(s);
-			teachers.put(teacher, t);
-		}
+		// sc.close()
 		this.courses.put(name, s);
 	}
+
+	public void feesOfStudent() {
+		System.out.println("Enter Student Name");
+		// Scanner sc = new Scanner(System.in);
+		String st = sc.next() + " " + sc.next();
+		// sc.close()
+		System.out.println(this.students.get(st).fees());
+
+	}
+
 }
