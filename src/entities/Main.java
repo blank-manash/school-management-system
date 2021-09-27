@@ -72,6 +72,7 @@ public class Main {
 			}
 			
 		}
+		System.out.println("\n Closing Application!");
 	}
 
 }

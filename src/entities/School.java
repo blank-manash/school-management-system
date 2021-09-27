@@ -16,7 +16,7 @@ public class School {
 		String name = sc.next();
 		String code = sc.next();
 		Integer price = sc.nextInt();
-		String teacher = sc.next();
+		String teacher = sc.next() + " " + sc.next();
 		Subject s = new Subject(name, code, price, teacher);
 
 		if (!teachers.containsKey(teacher)) {
@@ -136,7 +136,7 @@ public class School {
 	}
 
 	private final void succ() {
-		System.out.println("\nOperation Done Successfully!");
+		System.out.println("\nOperation Done Successfully! Please Select a new Choice");
 	}
 
 }
