@@ -12,7 +12,7 @@ public class School {
 
 	public void addCourse() {
 		System.out.println("Enter Course Details : ");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String name = sc.next();
 		final String code = sc.next();
 		final Integer price = sc.nextInt();
@@ -21,7 +21,7 @@ public class School {
 
 		if (!teachers.containsKey(teacher)) {
 			System.out.println("Teacher is Not Registered");
-			// sc.close()
+			
 			return;
 		}
 		Integer num = sc.nextInt();
@@ -33,18 +33,18 @@ public class School {
 
 			} else {
 				System.out.println("Student " + st + " is not registered");
-				// sc.close()
+				
 				return;
 			}
 		}
-		// sc.close()
+		
 		this.courses.put(name, s);
 		succ();
 	}
 
 	public void addStudent() {
 		System.out.println("Enter Student Details :");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String name = sc.next() + " " + sc.next();
 		final Integer grade = sc.nextInt();
 		final Student s = new Student();
@@ -53,21 +53,43 @@ public class School {
 
 		students.put(name, s);
 		succ();
-		// sc.close()
+		
 	}
 
 	public void addTeacher() {
 		System.out.println("Enter Teacher Details");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String name = sc.next() + " " + sc.next();
 		final Teacher t = new Teacher();
 		t.setName(name);
 
 		teachers.put(name, t);
 		succ();
-		// sc.close()
+		
 	}
 
+	public void deleteStudent(String name) {
+		students.remove(name);
+		courses.values().forEach(s -> s.removeStudent(name));
+	}
+
+	public void deleteTeacher(String name) {
+		teachers.remove(name);
+		for(Subject sub : courses.values()) {
+			if(sub.getTeacher() == name) {
+				for(String st : sub.students) {
+					this.students.get(st).removeCourse(sub.getName());
+				}
+			}
+		}
+	}
+	public void removeCourse(String name) {
+		this.teachers.get(courses.get(name).getTeacher()).removeCourse(name);
+		this.courses.remove(name);
+		for(Student s : students.values()) {
+			s.removeCourse(name);
+		}
+	}
 	public void feesOfStudent() {
 		System.out.println("Enter Student Name");
 
@@ -82,9 +104,9 @@ public class School {
 
 	public void listCoursesForStudent() {
 		System.out.println("Enter Course Name : ");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String name = sc.next();
-		// sc.close()
+		
 		students.get(name).getCoursesName().forEach(System.out::println);
 	}
 
@@ -104,9 +126,9 @@ public class School {
 
 	public void listStudentBySubject() {
 		System.out.println("Enter Course Name : ");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String course = sc.next();
-		// sc.close()
+		
 		for (final Student s : students.values()) {
 			if (s.getCoursesName().contains(course)) {
 				System.out.println(s.getName());
@@ -117,19 +139,19 @@ public class School {
 
 	public void listSubjectOfStudent() {
 		System.out.println("Enter Student Name : ");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String std = sc.next() + " " + sc.next();
-		// sc.close()
+		
 		this.students.get(std).getCoursesName().forEach(System.out::println);
 	}
 
 	public void listSubjectsOfTeacher() {
 		System.out.println("Enter Name of Teacher : ");
-		// Scanner sc = new Scanner(System.in);
+		
 		final String name = sc.next() + " " + sc.next();
-		// sc.close()
-		for (final Subject s : teachers.get(name).getCourses()) {
-			System.out.println(s.getName());
+		
+		for (final String s : teachers.get(name).getCourses()) {
+			System.out.println(s);
 		}
 	}
 

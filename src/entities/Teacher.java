@@ -4,10 +4,10 @@ import java.util.TreeSet;
 
 public class Teacher implements Comparable<Teacher> {
 	private String name;
-	private final TreeSet<Subject> courses = new TreeSet<>();
+	private final TreeSet<String> courses = new TreeSet<>();
 
 	public void addCourse(final Subject s) {
-		this.courses.add(s);
+		this.courses.add(s.getName());
 	}
 
 	@Override
@@ -15,8 +15,8 @@ public class Teacher implements Comparable<Teacher> {
 		return name.compareTo(o.name);
 	}
 
-	public Subject[] getCourses() {
-		return (Subject[]) courses.toArray();
+	public String[] getCourses() {
+		return (String[]) courses.toArray();
 	}
 
 	public String getName() {
@@ -25,6 +25,10 @@ public class Teacher implements Comparable<Teacher> {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void removeCourse(String name2) {
+		this.courses.remove(name2);
 	}
 
 }

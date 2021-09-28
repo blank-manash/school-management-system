@@ -7,7 +7,7 @@ public class Subject implements Comparable<Subject> {
 	private String code = "";
 	private Integer price;
 	private String teacher = "";
-	private final TreeSet<String> students = new TreeSet<>();
+	public final TreeSet<String> students = new TreeSet<>();
 
 	public Subject(final String name, final String code, final Integer price, final String teacher) {
 		this.name = name;
@@ -15,7 +15,7 @@ public class Subject implements Comparable<Subject> {
 		this.price = price;
 		this.teacher = teacher;
 	}
-
+	
 	public void addStudent(final Student s) {
 		this.students.add(s.getName());
 	}
@@ -59,6 +59,10 @@ public class Subject implements Comparable<Subject> {
 
 	public void setTeacher(final String teacher) {
 		this.teacher = teacher;
+	}
+
+	public void removeStudent(String name2) {
+		students.remove(name2);
 	}
 
 }

@@ -36,4 +36,9 @@ public class Student implements Comparable<Student> {
 		this.name = name;
 	}
 
+	public void removeCourse(String name2) {
+		this.coursesName.remove(name2);
+		
+	}
+
 }
