@@ -47,8 +47,15 @@ public class Main {
 					school.feesOfStudent();
 					break;
 				case 11:
-					prompt();
+					school.removeCourse();
+					break;
+				case 12:
+					school.deleteStudent();
+					break;
+				case 13:
+					school.deleteTeacher();
 				default:
+					prompt();
 					break;
 				}
 			}
@@ -71,8 +78,11 @@ public class Main {
 		System.out.println("8 : List all the subjects taught by a teacher.");
 		System.out.println("9 : List all the subjects enrolled for a student.");
 		System.out.println("10 : Present the fees payable by a particular student.");
-		System.out.println("11 : Repeat This Prompt");
+		System.out.println("11 : Delete a Course");
+		System.out.println("12 : Delete a Student");
+		System.out.println("13 : Delete a Teacher");
 
+		System.out.println("14 : Repeat This Prompt");
 		System.out.print("Enter a choice : ");
 	}
 
